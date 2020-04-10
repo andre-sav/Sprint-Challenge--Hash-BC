@@ -9,12 +9,16 @@ from hashtables import (HashTable,
 def get_indices_of_item_weights(weights, length, limit):
     ht = HashTable(16)
 
-    """
-    YOUR CODE HERE
-    """
-
+    for i in range(length):
+        # attempts to retrieve the index containing the weight which added to weight at loop iterable index will yield the limit
+        value = hash_table_retrieve(ht, limit - weights[i])
+        # if this doesn't exist, performs insertion
+        if value == None:
+            hash_table_insert(ht, weights[i], i)
+        # if the value does exist, returns the expected response tuple 
+        else:
+            return (i, value)
     return None
-
 
 def print_answer(answer):
     if answer is not None:
