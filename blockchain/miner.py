@@ -19,18 +19,19 @@ def proof_of_work(last_proof):
     - p is the previous proof, and p' is the new proof
     - Use the same method to generate SHA-256 hashes as the examples in class
     """
-
+    
     start = timer()
 
     print("Searching for next proof")
     proof = 0
-    #  TODO: Your code here
+    while valid_proof(last_proof, proof) is False:
+        proof += 1
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
 
 
-def valid_proof(last_hash, proof):
+def valid_proof(last_proof, proof):
     """
     Validates the Proof:  Multi-ouroborus:  Do the last five characters of
     the hash of the last proof match the first five characters of the hash
@@ -39,8 +40,13 @@ def valid_proof(last_hash, proof):
     IE:  last_hash: ...AE912345, new hash 12345E88...
     """
 
-    # TODO: Your code here!
-    pass
+    proof_hashed = hashlib.sha256(str(proof).encode()).hexdigest()
+    last_proof_hashed = hashlib.sha256(str(last_proof).encode()).hexdigest()
+
+    return last_proof_hashed[-5:] == proof_hashed[:5]
+
+
+
 
 
 if __name__ == '__main__':
